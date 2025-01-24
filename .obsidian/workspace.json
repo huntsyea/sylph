@@ -44,9 +44,19 @@
               "icon": "lucide-git-fork",
               "title": "Graph view"
             }
+          },
+          {
+            "id": "0c56d7ae5c57421e",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -183,8 +193,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "739af234fe3e07ca",
+  "active": "0c56d7ae5c57421e",
   "lastOpenFiles": [
+    "components/screens/home/products.json",
     "app/(posts)/guides/posts/crafting-a-winning-pmf-narrative.mdx",
     "app/(posts)/guides/posts/how-solo-founders-should-approach-pmf.mdx",
     "app/(posts)/guides/posts/how-solo-founders-should-approach-pmf copy.mdx"

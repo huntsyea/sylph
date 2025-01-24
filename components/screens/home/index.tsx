@@ -35,7 +35,7 @@ export default function Home() {
         <Posts category="guides" />
       </FadeIn.Item>
       <FadeIn.Item>
-        <Posts category="examples" />
+        <Posts category="writing" />
       </FadeIn.Item>
       <Spacer />
       <FadeIn.Item>
