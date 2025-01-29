@@ -28,39 +28,65 @@ export async function GET(request: Request) {
     /*
      * Finally we are fetching the font file from the public directory.
      */
-    const inter = fetch(new URL("/public/assets/inter/regular.ttf", import.meta.url)).then((res) => res.arrayBuffer());
+    const interRegular = fetch(new URL("/public/assets/inter/regular.ttf", import.meta.url)).then((res) => res.arrayBuffer());
+    const interSemiBold = fetch(new URL("/public/assets/inter/semi-bold.ttf", import.meta.url)).then((res) => res.arrayBuffer());
 
     return new ImageResponse(
       <div
         style={{
-          /* layout */
           display: "flex",
+          flexDirection: "column",
           width: "100%",
           height: "100%",
-
-          /* box */
-          padding: "40px",
-
-          /* style */
-          fontSize: "24px",
-          letterSpacing: "-0.47px",
-          backgroundColor: "black",
+          padding: "48px 56px",
+          backgroundColor: "hsl(0 0% 99%)",
+          position: "relative",
         }}
       >
+        {/* Top left username */}
+        <div
+          style={{
+            position: "absolute",
+            top: "48px",
+            left: "56px",
+            paddingLeft: "12px",
+            fontSize: "32px",
+            letterSpacing: "-0.3px",
+            color: "hsl(0 0% 45.1%)",
+            fontFamily: "Inter",
+            fontWeight: 400,
+          }}
+        >
+          @huntsyea
+        </div>
+
+        {/* Centered title */}
         <div
           style={{
             display: "flex",
+            flex: 1,
             alignItems: "center",
-            height: "24px",
-            gap: 12,
+            justifyContent: "center",
+            padding: "0 56px",
           }}
         >
-          <div style={{ color: "rgba(255, 255, 255, 0.92)" }}>next-sylph-portfolio</div>
-          {title && <div style={{ color: "rgba(255, 255, 255, 0.39)" }}>/</div>}
           {title ? (
-            <div style={{ color: "rgba(255, 255, 255, 0.39)" }}>{title.toLowerCase()}</div>
+            <div
+              style={{
+                fontSize: "62px",
+                fontWeight: 600,
+                letterSpacing: "-1.5px",
+                color: "hsl(0 0% 9%)",
+                textAlign: "center",
+                fontFamily: "Inter",
+                lineHeight: 1.1,
+                maxWidth: "720px",
+              }}
+            >
+              {title}
+            </div>
           ) : (
-            <svg width="16" viewBox="0 0 75 65" fill="white">
+            <svg width="32" viewBox="0 0 75 65" fill="hsl(0 0% 9%)">
               <path d="M37.59.25l36.95 64H.64l36.95-64z" />
             </svg>
           )}
@@ -72,13 +98,19 @@ export async function GET(request: Request) {
         fonts: [
           {
             name: "Inter",
-            data: await inter,
+            data: await interRegular,
             weight: 400,
+          },
+          {
+            name: "Inter",
+            data: await interSemiBold,
+            weight: 600,
           },
         ],
       },
     );
-  } catch {
+  } catch (error) {
+    console.error("Failed to generate OG image:", error);
     return new Response("Failed to generate the image", {
       status: 500,
     });

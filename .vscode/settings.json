@@ -1,3 +1,10 @@
 {
-  "mdx-preview.preview.useVscodeMarkdownStyles": false
+  "mdx-preview.preview.useVscodeMarkdownStyles": false,
+  "folder-color.pathColors": [
+    {
+      "folderPath": "main-blog/.obsidian/",
+      "badge": "🚫",
+      "color": "foldercolorizer.color_ff0000"
+    }
+  ]
 }

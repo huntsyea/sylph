@@ -1,3 +1,126 @@
+# Personal Blog & Portfolio
+
+A modern, performant personal blog and portfolio built with Next.js 14+. This site serves as a platform for sharing guides, writing, and projects while maintaining a clean, minimalist design focused on content presentation.
+
+## Tech Stack
+
+- **Framework**: Next.js 14+ with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **Content**: MDX
+- **Package Manager**: pnpm
+- **Animations**: Framer Motion
+- **Formatting**: Biome
+
+## Project Structure
+
+```
+.
+├── app/                    # Next.js app directory
+│   ├── (posts)/           # Post route group
+│   │   ├── guides/        # Guide posts
+│   │   ├── writing/       # Writing posts
+│   │   └── projects/      # Project posts
+│   ├── api/               # API routes
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── screens/          # Page-level components
+│   ├── motion/           # Animation components
+│   └── posts/            # Post-related components
+├── lib/                   # Utility functions
+├── styles/               # Global styles
+├── types/                # TypeScript types
+└── public/               # Static assets
+```
+
+## Features
+
+### Content Management
+- **MDX Support**: Write content in MDX with frontmatter
+- **Categories**: Organized into Guides, Writing, and Projects
+- **Post Metadata**: Rich metadata support including:
+  - Creation and update times
+  - Reading time estimation
+  - Tags and categories
+  - SEO metadata
+  - Social sharing metadata
+
+### UI/UX
+- **Modern Design**: Clean, minimalist interface
+- **Responsive Layout**: Works seamlessly across devices
+- **Animations**: Smooth fade-in transitions
+- **Navigation**: 
+  - Breadcrumb navigation
+  - Previous/Next post navigation
+  - Table of contents
+- **Dark Mode**: Built-in dark mode support
+
+### Performance & SEO
+- **Static Generation**: Pre-rendered pages for optimal performance
+- **Dynamic OG Images**: Automatic social share image generation
+- **SEO Optimized**: 
+  - Automatic sitemap generation
+  - Meta tags
+  - Structured data
+  - OpenGraph tags
+
+### Developer Experience
+- **TypeScript**: Full type safety
+- **Modern Tooling**:
+  - Biome for code formatting
+  - PostCSS for CSS processing
+  - pnpm for fast, efficient package management
+- **Code Organization**: Clear separation of concerns
+- **Component Architecture**: Reusable, modular components
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+```
+
+3. Run the development server:
+```bash
+pnpm dev
+```
+
+4. Create content:
+- Add MDX files to `app/(posts)/{category}/posts/`
+- Include required frontmatter
+- Use components in your MDX
+
+## Content Structure
+
+Posts are written in MDX and should include frontmatter:
+
+```mdx
+---
+title: "Your Post Title"
+time:
+  created: "2024-01-24T00:00:00.000Z"
+  updated: "2024-01-24T00:00:00.000Z"
+tags: ["tag1", "tag2"]
+summary: "A brief summary of your post"
+---
+
+Your content here...
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the terms of the license included with this repository.
+
 <p align="center">
 <img src=".github/assets/readme.png">
 <a href="https://github.com/sponsors/raphaelsalaja">
@@ -16,30 +139,3 @@
     </picture>
 </a>
 </p>
-
-A minimal and lightweight portfolio template designed for developers, designers, and creatives. It offers a clean, modern interface to showcase your work, share your ideas, and write blog posts.
-
-Built using Next.js, Sylph is optimized for performance and developer experience, providing flexibility and ease of use whether you're showcasing projects or writing content.
-
-## Features
-
-- **Responsive Design**: Works seamlessly on all devices and browsers.
-- **MDX and Markdown Support**: Write posts using MDX or Markdown, with extensive flexibility.
-- **Optimized for SEO**: Includes sitemaps, robots.txt, and metadata for better search engine visibility.
-- **Dynamic OpenGraph (OG) Images**: Automatically generate OG images for social media sharing.
-- **Syntax Highlighting**: Built-in support for highlighting code blocks.
-- **Tailwind v4**: Fully configured with the latest version of Tailwind CSS for efficient styling.
-- **Automated Blog Time Dating**: Automatically manage post creation and updated timestamps.
-- **Extensive Frontmatter**: Customize posts with rich metadata and organizational fields.
-- **Clean and Simple Structure**: Easy-to-navigate codebase for efficient customization.
-- **Light and Dark Mode**: Simple theming with light/dark mode toggle support.
-- **Foundations for Expansion**: Built with flexibility in mind, allowing easy expansion and customization.
-- **Theming**: Easily extend or customize themes to suit your brand.
-
-## Documentation
-
-To get started with Sylph, check out the [Guides](https://next-sylph-portfolio.vercel.app/guides).
-
-## Sponsor
-
-If you find this project helpful, consider supporting the project. Your contribution helps maintain the project and supports future development.
