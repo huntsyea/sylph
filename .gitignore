@@ -36,7 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 # obsidian
-/.obsidian
+/.obsidian/
 .obsidian/app.json
 .obsidian/appearance.json
 .obsidian/community-plugins.json
