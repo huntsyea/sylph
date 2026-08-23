@@ -8,9 +8,7 @@ test.describe("targeted visual baselines", () => {
 
   test("guide post", async ({ page }) => {
     await page.goto("/guides/basic-writing-and-formatting-syntax");
-    await expect(page).toHaveScreenshot("guide-post-syntax.png", {
-      fullPage: true,
-    });
+    await expect(page).toHaveScreenshot("guide-post-syntax.png");
   });
 
   test("category", async ({ page }) => {
