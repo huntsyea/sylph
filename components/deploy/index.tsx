@@ -1,18 +1,21 @@
 "use client";
 
-import { DeployLink } from "@/lib/deploy";
-
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 
-export const DeployButton = () => {
-  console.log(DeployLink);
+export const DeployButton = ({ href }: { href: string }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        bottom: -32,
-      }}
+      initial={
+        shouldReduceMotion
+          ? false
+          : {
+              opacity: 0,
+              bottom: -32,
+            }
+      }
       animate={{
         opacity: 1,
         bottom: 24,
@@ -21,29 +24,55 @@ export const DeployButton = () => {
         opacity: 0,
         bottom: -32,
       }}
-      transition={{
-        ease: [0.19, 1, 0.22, 1],
-        duration: 0.4,
-        delay: 1,
-      }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : {
+              ease: [0.19, 1, 0.22, 1],
+              duration: 0.4,
+              delay: 1,
+            }
+      }
       className="-translate-x-1/2 fixed left-1/2 transform text-small"
     >
-      <Link href={DeployLink}>
+      <Link aria-label="Deploy Sylph to Vercel" href={href}>
         <motion.div
-          whileHover={{
-            scale: 0.98,
-            opacity: 0.8,
-          }}
+          whileHover={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  scale: 0.98,
+                  opacity: 0.8,
+                }
+          }
           transition={{
             ease: [0.19, 1, 0.22, 1],
             duration: 0.4,
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="103" height="32" fill="none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="103"
+            height="32"
+            fill="none"
+          >
             <rect width="103" height="32" fill="#1A1A1A" rx="6" />
-            <rect width="102" height="31" x=".5" y=".5" stroke="#fff" strokeOpacity=".14" rx="5.5" />
+            <rect
+              width="102"
+              height="31"
+              x=".5"
+              y=".5"
+              stroke="#fff"
+              strokeOpacity=".14"
+              rx="5.5"
+            />
             <g clipPath="url(#a)">
-              <path fill="#EDEDED" fillRule="evenodd" d="m16 10.75 6 10.5H10l6-10.5Z" clipRule="evenodd" />
+              <path
+                fill="#EDEDED"
+                fillRule="evenodd"
+                d="m16 10.75 6 10.5H10l6-10.5Z"
+                clipRule="evenodd"
+              />
             </g>
             <path stroke="#fff" strokeOpacity=".14" d="M31.5 1v30" />
             <path
@@ -52,7 +81,12 @@ export const DeployButton = () => {
             />
             <defs>
               <clipPath id="a">
-                <path fill="#fff" d="M0 0h12v12H0z" fillOpacity="1" transform="translate(10 10)" />
+                <path
+                  fill="#fff"
+                  d="M0 0h12v12H0z"
+                  fillOpacity="1"
+                  transform="translate(10 10)"
+                />
               </clipPath>
             </defs>
           </svg>

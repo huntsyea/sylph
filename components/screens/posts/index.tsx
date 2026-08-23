@@ -1,55 +1,41 @@
-import type { Post } from "@/types";
+import type { AdjacentPosts, ContentPost } from "@/lib/content";
 
 import { TableOfContents } from "@/components/on-this-page";
 import { PostNavigation } from "@/components/post-navigation";
+import { renderPost } from "@/lib/content/renderer";
 import { formatter } from "@/lib/formatter";
-import { getPosts } from "@/lib/mdx";
-import { MDX } from "@/mdx-components";
 
 import React from "react";
 import { readingTime } from "reading-time-estimator";
 
 interface Props {
-  post: Post;
-  route: string;
+  post: ContentPost;
+  adjacent: AdjacentPosts;
 }
 
-export const Layout = ({ post, route }: Props) => {
-  const posts = getPosts(route);
-
-  const Seperator = () => {
-    return <div>⋅</div>;
-  };
-
-  const PublishedTime = () => {
-    return <div>Published {formatter.date(new Date(post.time.created))}</div>;
-  };
-  const UpdateTime = () => {
-    return <div>Updated {formatter.date(new Date(post.time.updated))}</div>;
-  };
-
-  const ReadingTime = () => {
-    return <div>{readingTime(post.content).minutes} minutes read</div>;
-  };
+export const Layout = async ({ post, adjacent }: Props) => {
+  const rendered = await renderPost(post);
 
   return (
-    <React.Fragment>
-      <div className="flex flex-col">
-        <div>
-          <h1>{post.title}</h1>
-        </div>
+    <article>
+      <header className="flex flex-col">
+        <h1>{post.title}</h1>
         <div className="mt-1 flex gap-2 text-muted text-small">
-          <PublishedTime />
-          <Seperator />
-          <UpdateTime />
-          <Seperator />
-          <ReadingTime />
+          <time dateTime={post.time.created}>
+            Published {formatter.date(post.createdAt)}
+          </time>
+          <span aria-hidden="true">⋅</span>
+          <time dateTime={post.time.updated}>
+            Updated {formatter.date(post.updatedAt)}
+          </time>
+          <span aria-hidden="true">⋅</span>
+          <span>{readingTime(post.content).minutes} minutes read</span>
         </div>
-      </div>
+      </header>
 
-      <MDX source={post.content} />
-      <PostNavigation posts={posts} />
-      <TableOfContents />
-    </React.Fragment>
+      {rendered.content}
+      <PostNavigation category={post.category} adjacent={adjacent} />
+      <TableOfContents outline={rendered.outline} />
+    </article>
   );
 };

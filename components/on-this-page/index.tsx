@@ -1,119 +1,97 @@
 "use client";
 
+import type { HeadingOutlineItem } from "@/lib/content/renderer";
+
 import { cn } from "@/lib/cn";
 
-import { motion } from "framer-motion";
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-export const TableOfContents = () => {
-  const [headings, setHeadings] = useState<{ id: string; text: string; level: string }[]>([]);
-  const [visibleHeadings, setVisibleHeadings] = useState<Set<string>>(new Set());
+interface TableOfContentsProps {
+  outline: readonly HeadingOutlineItem[];
+}
 
-  const getHeadings = useCallback(() => {
-    return Array.from(document.querySelectorAll("h1, h2, h3"))
-      .filter((heading) => heading.id)
-      .map((heading) => ({
-        id: heading.id,
-        text: heading.textContent || "",
-        level: heading.tagName.toLowerCase(),
-        top: (heading as HTMLElement).offsetTop,
-      }));
-  }, []);
+export const TableOfContents = ({ outline }: TableOfContentsProps) => {
+  const [visibleHeadings, setVisibleHeadings] = useState<Set<string>>(
+    new Set(),
+  );
 
   useEffect(() => {
-    const collectedHeadings = getHeadings();
-    setHeadings(collectedHeadings);
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      setVisibleHeadings((current) => {
+        const next = new Set(current);
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            next.add(entry.target.id);
+          } else {
+            next.delete(entry.target.id);
+          }
+        }
 
-    const observerOptions = {
+        return setsEqual(current, next) ? current : next;
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       threshold: 0,
-    };
+    });
 
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      const visibleSet = new Set(visibleHeadings);
-
-      for (const entry of entries) {
-        const headingId = entry.target.id;
-
-        if (entry.isIntersecting) {
-          visibleSet.add(headingId);
-        } else {
-          visibleSet.delete(headingId);
-        }
-      }
-
-      setVisibleHeadings(new Set(visibleSet));
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-    for (const heading of collectedHeadings) {
+    for (const heading of outline) {
       const element = document.getElementById(heading.id);
-      if (element) observer.observe(element);
+      if (element) {
+        observer.observe(element);
+      }
     }
 
     return () => {
       observer.disconnect();
     };
-  }, [getHeadings, visibleHeadings]);
+  }, [outline]);
 
-  const scroll = (id: string) => {
-    for (const heading of Array.from(document.querySelectorAll("h1, h2, h3"))) {
-      heading.setAttribute("data-highlight", "false");
-    }
-
-    const element = document.getElementById(id);
-
-    if (element) {
-      const top = element.offsetTop - 100;
-      window.scrollTo({
-        top: top,
-        behavior: "smooth",
-      });
-
-      element.setAttribute("data-highlight", "true");
-
-      setTimeout(() => {
-        element.setAttribute("data-highlight", "false");
-      }, 2000);
-    }
-  };
+  if (outline.length === 0) {
+    return null;
+  }
 
   return (
-    <React.Fragment>
-      <motion.nav
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25 }}
-        className={cn(
-          "top-[10rem] right-auto left-[2rem] hidden",
-          "xl:top-[6rem] xl:right-[6rem] xl:left-auto xl:block",
-          "fixed mt-0 h-full w-48 justify-start space-y-4 transition",
-        )}
-      >
-        <div className="mt-0 flex flex-col gap-0">
-          {headings.map((heading) => (
-            <div key={heading.id} className="mt-0">
-              <button
-                type="button"
-                onClick={() => scroll(heading.id)}
-                className={cn({
-                  "mt-0 ml-2 border-l border-l-gray-4 py-1 text-left text-muted opacity-100 transition ease-in-out hover:opacity-50": true,
-                  "text-bold text-gray-12": visibleHeadings.has(heading.id),
-                  "pl-4": heading.level === "h1",
-                  "pl-6": heading.level === "h2",
-                  "pl-7": heading.level === "h3",
-                  "border-l border-l-gray-12": visibleHeadings.has(heading.id),
-                })}
-                data-active={visibleHeadings.has(heading.id) ? "true" : "false"}
-              >
-                {heading.text}
-              </button>
-            </div>
-          ))}
-        </div>
-      </motion.nav>
-    </React.Fragment>
+    <nav
+      aria-label="On this page"
+      className={cn(
+        "top-[10rem] right-auto left-[2rem] hidden",
+        "xl:top-[6rem] xl:right-[6rem] xl:left-auto xl:block",
+        "fixed mt-0 h-full w-48 justify-start space-y-4",
+      )}
+    >
+      <ol className="mt-0 flex flex-col gap-0">
+        {outline.map((heading) => (
+          <li key={heading.id} className="mt-0 list-none">
+            <a
+              href={`#${heading.id}`}
+              className={cn({
+                "mt-0 ml-2 border-l border-l-gray-4 py-1 text-left text-muted opacity-100 transition ease-in-out hover:opacity-50": true,
+                "font-medium text-gray-12": visibleHeadings.has(heading.id),
+                "pl-4": heading.level === 2,
+                "pl-6": heading.level === 3,
+                "pl-7": heading.level >= 4,
+                "border-l border-l-gray-12": visibleHeadings.has(heading.id),
+              })}
+              aria-current={
+                visibleHeadings.has(heading.id) ? "location" : undefined
+              }
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
 };
+
+function setsEqual(
+  left: ReadonlySet<string>,
+  right: ReadonlySet<string>,
+): boolean {
+  return (
+    left.size === right.size && [...left].every((value) => right.has(value))
+  );
+}

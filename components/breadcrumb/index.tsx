@@ -10,38 +10,46 @@ import React from "react";
 export const Breadcrumb = () => {
   const pathname = usePathname();
 
-  const paths = pathname
-    .split("/")
-    .filter((path) => path !== "")
-    .map((path) => path.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()));
+  const segments = pathname.split("/").filter(Boolean);
 
   return (
-    <div className={cn("mt-0 mb-4 flex w-full items-center gap-1 align-middle font-normal text-small")}>
-      <Link className="text-muted" href="/">
-        Home
-      </Link>
-      <ChevronRightIcon className="text-muted" />
-      {paths.map((path, index) => {
-        const href = `/${paths
-          .slice(0, index + 1)
-          .join("/")
-          .toLowerCase()}`;
+    <nav
+      aria-label="Breadcrumb"
+      className={cn("mt-0 mb-4 w-full font-normal text-small")}
+    >
+      <ol className="flex list-none items-center gap-1 align-middle">
+        <li>
+          <Link className="text-muted" href="/">
+            Home
+          </Link>
+        </li>
+        {segments.map((segment, index) => {
+          const href = `/${segments.slice(0, index + 1).join("/")}`;
+          const label = segment
+            .replaceAll("-", " ")
+            .replace(/\b\w/g, (character) => character.toUpperCase());
+          const isLast = index === segments.length - 1;
 
-        const isLast = index === paths.length - 1;
-
-        return (
-          <React.Fragment key={path}>
-            {isLast ? (
-              <span className="text-muted">{path}</span>
-            ) : (
-              <Link className="text-muted" href={href}>
-                {path}
-              </Link>
-            )}
-            {index < paths.length - 1 && <ChevronRightIcon className="text-muted" />}
-          </React.Fragment>
-        );
-      })}
-    </div>
+          return (
+            <React.Fragment key={href}>
+              <li aria-hidden="true">
+                <ChevronRightIcon className="text-muted" />
+              </li>
+              <li>
+                {isLast ? (
+                  <span aria-current="page" className="text-muted">
+                    {label}
+                  </span>
+                ) : (
+                  <Link className="text-muted" href={href}>
+                    {label}
+                  </Link>
+                )}
+              </li>
+            </React.Fragment>
+          );
+        })}
+      </ol>
+    </nav>
   );
 };

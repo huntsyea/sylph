@@ -1,23 +1,37 @@
-@import url("@radix-ui/colors/gray.css");
-@import url("@radix-ui/colors/gray-alpha.css");
-@import url("@radix-ui/colors/gray-dark.css");
-@import url("@radix-ui/colors/gray-dark-alpha.css");
-@import url("@radix-ui/colors/pink.css");
-@import url("@radix-ui/colors/pink-alpha.css");
-@import url("@radix-ui/colors/pink-dark.css");
-@import url("@radix-ui/colors/pink-dark-alpha.css");
-@import url("@radix-ui/colors/yellow.css");
-@import url("@radix-ui/colors/yellow-alpha.css");
-@import url("@radix-ui/colors/yellow-dark.css");
-@import url("@radix-ui/colors/yellow-dark-alpha.css");
-@import url("@radix-ui/colors/black-alpha.css");
-@import url("@radix-ui/colors/white-alpha.css");
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/gray-alpha.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/gray-dark-alpha.css";
+@import "@radix-ui/colors/pink.css";
+@import "@radix-ui/colors/pink-alpha.css";
+@import "@radix-ui/colors/pink-dark.css";
+@import "@radix-ui/colors/pink-dark-alpha.css";
+@import "@radix-ui/colors/yellow.css";
+@import "@radix-ui/colors/yellow-alpha.css";
+@import "@radix-ui/colors/yellow-dark.css";
+@import "@radix-ui/colors/yellow-dark-alpha.css";
+@import "@radix-ui/colors/black-alpha.css";
+@import "@radix-ui/colors/white-alpha.css";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@config "../tailwind.config.ts";
 
 @layer base {
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+
   /*
   * We are using the Radix UI Colors package to generate a set of color variables that can be used in the project.
   * @see: https://colors.radix-ui.com/
@@ -26,7 +40,7 @@
   :root {
     --bg: var(--gray-1);
     --fg: var(--gray-12);
-    --muted: var(--gray-8);
+    --muted: var(--gray-11);
     --border: var(--gray-4);
     --scrollbar-thumb: var(--gray-4);
     --scrollbar-track: transparent;
@@ -43,9 +57,8 @@
   }
 
   * {
-    --webkit-font-smoothing: antialiased;
-    --moz-osx-font-smoothing: grayscale;
-
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-variant-ligatures: common-ligatures;
     text-wrap: pretty;
     text-rendering: optimizelegibility;
@@ -57,10 +70,10 @@
   }
 
   html {
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     scrollbar-gutter: stable;
-    scrollbar-width: thin;
     scroll-behavior: smooth;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
   }
 
   html {
@@ -115,7 +128,7 @@
     }
   }
 
-  article {
+  .article {
     h1 + h2 {
       margin-top: 4px !important;
     }
@@ -158,7 +171,7 @@
     }
 
     [data-highlight="true"]::before {
-      @apply bg-highlight-background text-highlight-foreground scale-y-110 !important;
+      @apply bg-highlight-background text-highlight-foreground scale-y-110;
     }
 
     [data-highlight="false"]::before {
@@ -275,7 +288,7 @@
       margin-right: 2px;
       margin-left: 2px;
       text-align: center;
-      background-color: var(--kbd-background) !important;
+      background-color: var(--gray-2) !important;
       border-radius: 4px;
       box-shadow: 0 0 0 1px var(--kbd-border);
     }

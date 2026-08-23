@@ -1,22 +1,40 @@
 "use client";
 
+import type { ThemeProviderProps } from "next-themes";
 import type React from "react";
 
 import { cn } from "@/lib/cn";
 
 import { Monitor, Moon, Sun } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const CompatibleThemeProvider = ThemeProvider as React.ComponentType<
+  React.PropsWithChildren<ThemeProviderProps>
+>;
+
+const subscribeToHydration = () => () => {};
+
+function useHydrated() {
+  return useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
+}
 
 export const AppThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  if (!mounted) {
+    return (
+      <span
+        aria-hidden="true"
+        className="flex h-7 w-[82px] rounded-[6px] bg-gray-2 p-[2px]"
+      />
+    );
+  }
 
   const buttons = [
     {
@@ -29,13 +47,22 @@ export const AppThemeSwitcher = () => {
   ];
 
   return (
-    <span className="flex w-fit items-center gap-0.5 overflow-hidden rounded-[6px] bg-gray-2 p-[2px]">
+    <span
+      aria-label="Theme"
+      className="flex w-[82px] items-center justify-center gap-0.5 overflow-hidden rounded-[6px] bg-gray-2 p-[2px]"
+      role="group"
+    >
       {buttons.map(({ label, icon, active }) => (
         <button
           type="button"
           key={label}
           onClick={() => setTheme(label)}
-          className={cn("ransition-all flex h-6 w-6 items-center justify-center rounded-[4px] hover:opacity-50", active ? "bg-gray-4 text-foreground" : "")}
+          aria-label={`Use ${label} theme`}
+          aria-pressed={active}
+          className={cn(
+            "transition-all flex h-6 w-6 items-center justify-center rounded-[4px] hover:opacity-50",
+            active ? "bg-gray-4 text-foreground" : "",
+          )}
         >
           {icon}
         </button>
@@ -50,8 +77,14 @@ export const AppThemeProvider = ({
   children: React.ReactNode;
 }) => {
   return (
-    <ThemeProvider enableSystem={true} attribute="class" storageKey="theme" defaultTheme="system">
+    <CompatibleThemeProvider
+      enableSystem={true}
+      attribute="class"
+      storageKey="theme"
+      defaultTheme="system"
+      disableTransitionOnChange
+    >
       {children}
-    </ThemeProvider>
+    </CompatibleThemeProvider>
   );
 };

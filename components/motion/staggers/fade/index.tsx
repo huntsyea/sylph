@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
-const container = {
+import { motion, useReducedMotion } from "framer-motion";
+
+const container: Variants = {
   hidden: {},
   show: {
     transition: {
@@ -12,14 +14,12 @@ const container = {
   },
 };
 
-const item = {
+const item: Variants = {
   hidden: {
-    opacity: 0,
     y: 16,
     filter: "blur(4px)",
   },
   show: {
-    opacity: 1,
     scale: 1,
     y: 0,
     filter: "blur(0px)",
@@ -33,15 +33,28 @@ const item = {
 };
 
 function Container({ children, className }: React.HTMLProps<HTMLDivElement>) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className={className}>
+    <motion.div
+      variants={shouldReduceMotion ? undefined : container}
+      initial={shouldReduceMotion ? false : "hidden"}
+      animate={shouldReduceMotion ? undefined : "show"}
+      className={className}
+    >
       {children}
     </motion.div>
   );
 }
 
 function Item({ children }: { children: React.ReactNode }) {
-  return <motion.div variants={item}>{children}</motion.div>;
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div variants={shouldReduceMotion ? undefined : item}>
+      {children}
+    </motion.div>
+  );
 }
 
 export { Container, Item };

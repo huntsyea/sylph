@@ -7,9 +7,10 @@ const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./markdown/**/*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.{md,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./mdx-components.tsx",
+    "./lib/**/*.{js,ts,jsx,tsx}",
+    "./tests/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {

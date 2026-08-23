@@ -1,13 +1,23 @@
-import nextMDX from "@next/mdx";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ["md", "mdx", "tsx", "ts", "jsx", "js"],
+  turbopack: {
+    root: projectRoot,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatar.vercel.sh",
+        pathname: "/sylph",
+      },
+    ],
+  },
 };
 
-const withMDX = nextMDX({
-  extension: /\.mdx?$/,
-});
-
-export default withMDX(nextConfig);
+export default nextConfig;
