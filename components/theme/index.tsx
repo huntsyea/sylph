@@ -1,6 +1,5 @@
 "use client";
 
-import type { ThemeProviderProps } from "next-themes";
 import type React from "react";
 
 import { cn } from "@/lib/cn";
@@ -8,10 +7,6 @@ import { cn } from "@/lib/cn";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
-
-const CompatibleThemeProvider = ThemeProvider as React.ComponentType<
-  React.PropsWithChildren<ThemeProviderProps>
->;
 
 const subscribeToHydration = () => () => {};
 
@@ -77,7 +72,7 @@ export const AppThemeProvider = ({
   children: React.ReactNode;
 }) => {
   return (
-    <CompatibleThemeProvider
+    <ThemeProvider
       enableSystem={true}
       attribute="class"
       storageKey="theme"
@@ -85,6 +80,6 @@ export const AppThemeProvider = ({
       disableTransitionOnChange
     >
       {children}
-    </CompatibleThemeProvider>
+    </ThemeProvider>
   );
 };

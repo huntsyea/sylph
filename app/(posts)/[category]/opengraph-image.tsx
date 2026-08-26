@@ -7,13 +7,12 @@ import { notFound } from "next/navigation";
 export const size = OPEN_GRAPH_SIZE;
 export const contentType = "image/png";
 
-type OpenGraphImageProps = {
-  params: Promise<{ category: string }>;
-};
-
-export async function generateImageMetadata({ params }: OpenGraphImageProps) {
-  const { category: slug } = await params;
-  const category = contentCatalog.getCategory(slug);
+export function generateImageMetadata({
+  params,
+}: {
+  params: { category: string };
+}) {
+  const category = contentCatalog.getCategory(params.category);
 
   if (!category) {
     return [];
@@ -29,7 +28,11 @@ export async function generateImageMetadata({ params }: OpenGraphImageProps) {
   ];
 }
 
-export default async function OpenGraphImage({ params }: OpenGraphImageProps) {
+export default async function OpenGraphImage({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
   const { category: slug } = await params;
   const category = contentCatalog.getCategory(slug);
 

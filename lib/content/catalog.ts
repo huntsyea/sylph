@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { PostFrontmatter } from "@/lib/content/schema";
 
 import {
@@ -84,6 +86,10 @@ export class ContentCatalog {
       { kind: "category" as const, category },
       ...category.posts.map((post) => ({ kind: "post" as const, post })),
     ]);
+  }
+
+  listPosts(): readonly ContentPost[] {
+    return this.load().categories.flatMap((category) => category.posts);
   }
 
   getCategory(category: string): ContentCategory | undefined {

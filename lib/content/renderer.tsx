@@ -94,21 +94,6 @@ function validatePostSource(sourcePath: string) {
         );
       }
 
-      if (value.type === "mdxjsEsm") {
-        throw new ContentRenderError(
-          `Post "${sourcePath}" contains an MDX import or export, which is not allowed in authored content.`,
-        );
-      }
-
-      if (
-        value.type === "mdxFlowExpression" ||
-        value.type === "mdxTextExpression"
-      ) {
-        throw new ContentRenderError(
-          `Post "${sourcePath}" contains a JavaScript expression, which is not allowed in authored content.`,
-        );
-      }
-
       if (
         (value.type === "mdxJsxFlowElement" ||
           value.type === "mdxJsxTextElement") &&
