@@ -71,4 +71,4 @@ SITE_URL=https://example.com pnpm verify
 - `app/robots.ts`, `app/sitemap.ts`, and native `opengraph-image.tsx` files generate crawler and social surfaces from the same catalog and site profile.
 - `tests/unit/` verifies the two domain seams; `tests/e2e/` verifies the production-built site, accessibility, themes, metadata, and social images.
 
-The shipped architecture and verification evidence are summarized in [`docs/modernization-report.md`](docs/modernization-report.md). The original audit, research, and requirements remain in [`docs/sylph-modernization-audit.md`](docs/sylph-modernization-audit.md), [`docs/nextjs-modernization-research.md`](docs/nextjs-modernization-research.md), and [`docs/specs/modernize-sylph.md`](docs/specs/modernize-sylph.md).
+The shipped architecture, version rationale, and verification evidence are summarized in [`docs/modernization-report.md`](docs/modernization-report.md). The content-routing decision is recorded in [`docs/adr/0001-content-category-routing.md`](docs/adr/0001-content-category-routing.md).

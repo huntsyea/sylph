@@ -15,7 +15,7 @@ The supported baseline is:
 - `next-mdx-remote` 6.0.0 and Zod 4.4.3
 - TypeScript 5.9.3; TypeScript 7 remains a separate migration
 
-The research and version rationale are recorded in [the modernization research](nextjs-modernization-research.md). ESLint remains on the compatible 9.x line because the framework lint stack does not yet expose a clean ESLint 10 peer set.
+ESLint remains on the compatible 9.x line because the framework lint stack does not yet expose a clean ESLint 10 peer set.
 
 ## Architecture
 
@@ -73,5 +73,3 @@ Next.js 16.3.2 logs `Internal: NoFallbackError` when an intentionally ungenerate
 - ESLint 10 after the Next.js lint peer family supports it cleanly
 - CSS-first Tailwind configuration after the temporary JavaScript bridge is no longer needed
 - A content adapter only if a second real content source is introduced
-
-The originating requirements remain in [the modernization specification](specs/modernize-sylph.md); the pre-change evidence remains in [the architecture audit](sylph-modernization-audit.md).
