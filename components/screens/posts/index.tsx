@@ -1,4 +1,4 @@
-import type { AdjacentPosts, ContentPost } from "@/lib/content";
+import type { AdjacentPosts, ContentPost } from "@/lib/content/types";
 
 import { TableOfContents } from "@/components/on-this-page";
 import { PostNavigation } from "@/components/post-navigation";

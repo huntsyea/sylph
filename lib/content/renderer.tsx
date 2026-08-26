@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { ContentPost } from "@/lib/content";
+import type { HeadingOutlineItem } from "@/lib/content/types";
 
 import { mdxComponents } from "@/mdx-components";
 
@@ -9,12 +10,6 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { visit } from "unist-util-visit";
-
-export type HeadingOutlineItem = {
-  id: string;
-  text: string;
-  level: 2 | 3 | 4 | 5 | 6;
-};
 
 export type RenderedPost = {
   content: React.ReactNode;

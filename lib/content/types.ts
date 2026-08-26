@@ -39,3 +39,9 @@ export type ContentEntry =
       kind: "post";
       post: ContentPost;
     };
+
+export type HeadingOutlineItem = {
+  id: string;
+  text: string;
+  level: 2 | 3 | 4 | 5 | 6;
+};
