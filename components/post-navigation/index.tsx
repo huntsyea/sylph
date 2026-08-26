@@ -1,6 +1,6 @@
 "use client";
 
-import type { AdjacentPosts } from "@/lib/content";
+import type { AdjacentPosts } from "@/lib/content/types";
 
 import { Link } from "next-view-transitions";
 
