@@ -1,4 +1,14 @@
+import "server-only";
+
 import type { PostFrontmatter } from "@/lib/content/schema";
+import type {
+  AdjacentPosts,
+  ContentCategory,
+  ContentEntry,
+  ContentPost,
+  ContentPostReference,
+  PostLookup,
+} from "@/lib/content/types";
 
 import {
   isValidContentSegment,
@@ -19,46 +29,6 @@ export class ContentCatalogError extends Error {
     this.name = "ContentCatalogError";
   }
 }
-
-export type ContentPost = PostFrontmatter & {
-  category: string;
-  slug: string;
-  content: string;
-  sourcePath: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type ContentCategory = {
-  slug: string;
-  title: string;
-  posts: readonly ContentPost[];
-};
-
-export type ContentPostReference = Readonly<{
-  slug: string;
-  title: string;
-}>;
-
-export type AdjacentPosts = {
-  previous: ContentPostReference | undefined;
-  next: ContentPostReference | undefined;
-};
-
-export type PostLookup =
-  | { kind: "found"; post: ContentPost }
-  | { kind: "unknown-category"; category: string }
-  | { kind: "unknown-post"; category: string; slug: string };
-
-export type ContentEntry =
-  | {
-      kind: "category";
-      category: ContentCategory;
-    }
-  | {
-      kind: "post";
-      post: ContentPost;
-    };
 
 type LoadedCatalog = {
   categories: readonly ContentCategory[];
@@ -84,6 +54,10 @@ export class ContentCatalog {
       { kind: "category" as const, category },
       ...category.posts.map((post) => ({ kind: "post" as const, post })),
     ]);
+  }
+
+  listPosts(): readonly ContentPost[] {
+    return this.load().categories.flatMap((category) => category.posts);
   }
 
   getCategory(category: string): ContentCategory | undefined {

@@ -1,4 +1,4 @@
-import type { ContentCategory } from "@/lib/content";
+import type { ContentCategory } from "@/lib/content/types";
 
 import { formatter } from "@/lib/formatter";
 

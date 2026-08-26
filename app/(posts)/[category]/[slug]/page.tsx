@@ -14,13 +14,10 @@ type PageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return contentCatalog
-    .listEntries()
-    .flatMap((entry) =>
-      entry.kind === "post"
-        ? [{ category: entry.post.category, slug: entry.post.slug }]
-        : [],
-    );
+  return contentCatalog.listPosts().map((post) => ({
+    category: post.category,
+    slug: post.slug,
+  }));
 }
 
 export async function generateMetadata({
@@ -30,7 +27,7 @@ export async function generateMetadata({
   const result = contentCatalog.getPost(category, slug);
 
   if (result.kind !== "found") {
-    return {};
+    notFound();
   }
 
   const { post } = result;
@@ -54,11 +51,10 @@ export default async function Page({ params }: PageProps) {
   }
 
   const { post } = result;
-  const adjacent = contentCatalog.getAdjacent(category, slug);
-
-  if (!adjacent) {
-    notFound();
-  }
+  const adjacent = contentCatalog.getAdjacent(category, slug) ?? {
+    previous: undefined,
+    next: undefined,
+  };
 
   return <Layout post={post} adjacent={adjacent} />;
 }

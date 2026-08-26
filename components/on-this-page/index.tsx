@@ -1,6 +1,6 @@
 "use client";
 
-import type { HeadingOutlineItem } from "@/lib/content/renderer";
+import type { HeadingOutlineItem } from "@/lib/content/types";
 
 import { cn } from "@/lib/cn";
 

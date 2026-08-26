@@ -51,21 +51,32 @@ describe("renderPost", () => {
     expect(html).toContain("<figure");
   });
 
-  it.each([
-    ["a page-level heading", "# Duplicate page title"],
-    ["an MDX import", 'import Demo from "./demo"'],
-    ["a JavaScript expression", "The answer is {6 * 7}."],
-  ])(
-    "rejects %s with a source-specific error",
-    async (_description, content) => {
-      await expect(renderPost(createPost(content))).rejects.toThrow(
-        ContentRenderError,
-      );
-      await expect(renderPost(createPost(content))).rejects.toThrow(
-        /fixture\.mdx/,
-      );
-    },
-  );
+  it("rejects a page-level heading with a source-specific error", async () => {
+    await expect(
+      renderPost(createPost("# Duplicate page title")),
+    ).rejects.toThrow(ContentRenderError);
+    await expect(
+      renderPost(createPost("# Duplicate page title")),
+    ).rejects.toThrow(/fixture\.mdx/);
+  });
+
+  it("lets blockJS strip expressions instead of throwing", async () => {
+    const rendered = await renderPost(createPost("The answer is {6 * 7}."));
+    const html = renderToStaticMarkup(rendered.content);
+
+    expect(html).toContain("The answer is");
+    expect(html).not.toContain("42");
+  });
+
+  it("lets next-mdx-remote strip imports instead of throwing", async () => {
+    const rendered = await renderPost(
+      createPost('import Demo from "./demo"\n\n## Hello'),
+    );
+
+    expect(rendered.outline).toEqual([
+      { id: "hello", text: "Hello", level: 2 },
+    ]);
+  });
 });
 
 function createPost(content: string) {

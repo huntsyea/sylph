@@ -1,7 +1,3 @@
-import { ContentCatalog } from "../../lib/content/catalog";
-
-const contentCatalog = new ContentCatalog();
-
 export const siteRoutes = {
   home: "/",
   guides: "/guides",
@@ -14,18 +10,18 @@ export const siteRoutes = {
   missingPost: "/guides/this-post-does-not-exist",
 } as const;
 
-const catalogRoutes = contentCatalog
-  .listEntries()
-  .map((entry) =>
-    entry.kind === "category"
-      ? `/${entry.category.slug}`
-      : `/${entry.post.category}/${entry.post.slug}`,
-  );
+export const postRoutes = [
+  siteRoutes.guidePost,
+  siteRoutes.projectStructurePost,
+  siteRoutes.writingPost,
+  siteRoutes.examplePost,
+] as const;
 
-export const postRoutes = catalogRoutes.filter(
-  (route) => route.split("/").length === 3,
-);
-
-export const indexableRoutes = [siteRoutes.home, ...catalogRoutes];
+export const indexableRoutes = [
+  siteRoutes.home,
+  siteRoutes.guides,
+  siteRoutes.examples,
+  ...postRoutes,
+];
 
 export const themeLabels = ["system", "dark", "light"] as const;

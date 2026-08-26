@@ -54,6 +54,9 @@ describe("ContentCatalog", () => {
       "post:guides/newer",
       "post:guides/older",
     ]);
+    expect(
+      catalog.listPosts().map((post) => `${post.category}/${post.slug}`),
+    ).toEqual(["guides/newer", "guides/older"]);
   });
 
   it("looks up posts and calculates adjacent posts without changing catalog ordering", () => {

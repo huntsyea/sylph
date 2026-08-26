@@ -9,19 +9,11 @@ import React from "react";
 
 export const mdxComponents: MDXComponents = {
   Link,
-  PreviewExample: () => {
-    return (
-      <div className="min- flex h-10 w-32 items-center justify-center rounded-lg border border-yellow-6 bg-yellow-3 text-yellow-11">
-        <div className="overflow-x-auto">
-          <div className="min-w-full">
-            <div className="min-w-full">
-              <div className="min-w-full">Showcase</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  },
+  PreviewExample: () => (
+    <div className="flex h-10 w-32 items-center justify-center rounded-lg border border-yellow-6 bg-yellow-3 text-yellow-11">
+      Showcase
+    </div>
+  ),
   Preview: ({ children, codeblock }) => (
     <Preview codeblock={codeblock ? codeblock : undefined}>{children}</Preview>
   ),

@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { ContentPost } from "@/lib/content";
+import type { HeadingOutlineItem } from "@/lib/content/types";
 
 import { mdxComponents } from "@/mdx-components";
 
@@ -9,12 +10,6 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { visit } from "unist-util-visit";
-
-export type HeadingOutlineItem = {
-  id: string;
-  text: string;
-  level: 2 | 3 | 4 | 5 | 6;
-};
 
 export type RenderedPost = {
   content: React.ReactNode;
@@ -91,21 +86,6 @@ function validatePostSource(sourcePath: string) {
       if (value.type === "heading" && value.depth === 1) {
         throw new ContentRenderError(
           `Post "${sourcePath}" contains an h1. Post titles supply the only page-level heading.`,
-        );
-      }
-
-      if (value.type === "mdxjsEsm") {
-        throw new ContentRenderError(
-          `Post "${sourcePath}" contains an MDX import or export, which is not allowed in authored content.`,
-        );
-      }
-
-      if (
-        value.type === "mdxFlowExpression" ||
-        value.type === "mdxTextExpression"
-      ) {
-        throw new ContentRenderError(
-          `Post "${sourcePath}" contains a JavaScript expression, which is not allowed in authored content.`,
         );
       }
 

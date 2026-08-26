@@ -14,10 +14,8 @@ export const dynamicParams = false;
 
 export function generateStaticParams() {
   return contentCatalog
-    .listEntries()
-    .flatMap((entry) =>
-      entry.kind === "category" ? [{ category: entry.category.slug }] : [],
-    );
+    .listCategories()
+    .map((category) => ({ category: category.slug }));
 }
 
 export async function generateMetadata({
@@ -27,7 +25,7 @@ export async function generateMetadata({
   const category = contentCatalog.getCategory(slug);
 
   if (!category) {
-    return {};
+    notFound();
   }
 
   return createSiteMetadata({
