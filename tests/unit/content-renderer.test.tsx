@@ -52,12 +52,12 @@ describe("renderPost", () => {
   });
 
   it("rejects a page-level heading with a source-specific error", async () => {
-    await expect(renderPost(createPost("# Duplicate page title"))).rejects.toThrow(
-      ContentRenderError,
-    );
-    await expect(renderPost(createPost("# Duplicate page title"))).rejects.toThrow(
-      /fixture\.mdx/,
-    );
+    await expect(
+      renderPost(createPost("# Duplicate page title")),
+    ).rejects.toThrow(ContentRenderError);
+    await expect(
+      renderPost(createPost("# Duplicate page title")),
+    ).rejects.toThrow(/fixture\.mdx/);
   });
 
   it("lets blockJS strip expressions instead of throwing", async () => {
@@ -73,7 +73,9 @@ describe("renderPost", () => {
       createPost('import Demo from "./demo"\n\n## Hello'),
     );
 
-    expect(rendered.outline).toEqual([{ id: "hello", text: "Hello", level: 2 }]);
+    expect(rendered.outline).toEqual([
+      { id: "hello", text: "Hello", level: 2 },
+    ]);
   });
 });
 
