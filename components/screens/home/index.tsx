@@ -1,4 +1,5 @@
 import { DeployButton } from "@/components/deploy";
+import { Favorites } from "@/components/favorites";
 import { Footer } from "@/components/footer";
 import * as FadeIn from "@/components/motion/staggers/fade";
 import { Posts } from "@/components/posts";
@@ -41,6 +42,9 @@ export default function Home() {
           <Posts category={examples} />
         </FadeIn.Item>
       )}
+      <FadeIn.Item>
+        <Favorites />
+      </FadeIn.Item>
       <Spacer />
       <FadeIn.Item>
         <Footer />
