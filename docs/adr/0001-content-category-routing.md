@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-08-23
-- Supersedes: duplicated `guides` and `examples` route implementations
+- Supersedes: duplicated `posts` and `projects` route implementations
 
 ## Context
 
@@ -13,6 +13,7 @@ The starter has one real content source: trusted files committed under the repos
 ## Decision
 
 - Authored posts live under `content/<category>/<slug>.mdx` or `.md`.
+- `content/favorites` is reserved for curated outbound links and is not discovered as a category.
 - Route-safe category and post slugs are discovered and validated at build time by one `ContentCatalog` module.
 - `app/(posts)/[category]` and `[slug]` are the only category and post route implementations.
 - Both segments use catalog-backed `generateStaticParams` and `dynamicParams = false`.

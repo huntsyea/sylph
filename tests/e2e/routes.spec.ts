@@ -33,12 +33,12 @@ test.describe("production routes", () => {
   test("category, breadcrumb, and table-of-contents markup is semantic", async ({
     page,
   }) => {
-    await page.goto(siteRoutes.guides);
+    await page.goto(siteRoutes.posts);
     await expect(
       page.getByRole("list").last().locator(":scope > li"),
     ).toHaveCount(3);
 
-    await page.goto(siteRoutes.guidePost);
+    await page.goto(siteRoutes.gettingStartedPost);
     const breadcrumb = page.getByRole("navigation", { name: "Breadcrumb" });
     await expect(breadcrumb.locator("ol > li")).toHaveCount(5);
     await expect(breadcrumb.locator('[aria-current="page"]')).toHaveText(
@@ -72,7 +72,9 @@ test.describe("production routes", () => {
 
     const outbound = page.locator('main a[target="_blank"]');
     await expect(outbound).toHaveCount(12);
-    await expect(outbound.first()).toHaveAttribute(
+    await expect(
+      page.getByRole("link", { name: /Designing for the Web/ }),
+    ).toHaveAttribute(
       "href",
       "https://chriscoyier.net/2025/01/05/designing-for-the-web/",
     );
