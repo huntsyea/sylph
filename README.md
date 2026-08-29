@@ -28,6 +28,8 @@ content/
     first-note.mdx
 ```
 
+`content/favorites` is reserved for curated outbound links. It is not a blog category; `/favorites` stays a static page.
+
 Each post requires authored timestamps:
 
 ```yaml

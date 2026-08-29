@@ -7,12 +7,12 @@ author:
   handle: "raphaelsalaja"
 time:
   created: "2024-09-30T14:11:11.816Z"
-  updated: "2026-08-23T12:00:00.000Z"
+  updated: "2026-08-29T13:00:00.000Z"
 ---
 
 ## Content and Routes
 
-Authored posts live outside the route tree. Each route-safe folder under `content/` is a category, and each `.md` or `.mdx` file becomes a post:
+Authored posts live outside the route tree. Each route-safe folder under `content/` is a category, except `content/favorites`, which holds curated outbound links for the static `/favorites` page. Each `.md` or `.mdx` file in a category folder becomes a post:
 
 ```text
 content/
@@ -57,7 +57,7 @@ seo:
 ---
 ```
 
-`title` and both ISO timestamps are required. `updated` cannot precede `created`. Optional `summary`, `author`, `media`, and `seo` values are validated strictly; unknown fields fail verification with the source path and field-level reason.
+`title` and both ISO timestamps are required. `updated` cannot precede `created`. Optional `summary`, `author`, `media`, and `seo` objects are validated strictly. Unknown top-level keys, such as leftover `share` or `category` fields from a publisher, are ignored. Missing required fields still fail verification with the source path and field-level reason.
 
 ## Trusted MDX
 
