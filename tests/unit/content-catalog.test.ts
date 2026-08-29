@@ -25,7 +25,8 @@ describe("ContentCatalog", () => {
       title: "Newer",
       created: "2024-02-01T00:00:00.000Z",
     });
-    fs.mkdirSync(path.join(root, "examples"));
+    fs.mkdirSync(path.join(root, "projects"));
+    fs.writeFileSync(path.join(root, "home.md"), "---\ntitle: Home\n---\n");
 
     const catalog = createContentCatalog({ contentRoot: root });
 
@@ -37,8 +38,8 @@ describe("ContentCatalog", () => {
           category.posts.map((post) => post.slug),
         ]),
     ).toEqual([
-      ["examples", []],
       ["posts", ["newer", "older"]],
+      ["projects", []],
     ]);
     expect(
       catalog
@@ -49,10 +50,10 @@ describe("ContentCatalog", () => {
             : `post:${entry.post.category}/${entry.post.slug}`,
         ),
     ).toEqual([
-      "category:examples",
       "category:posts",
       "post:posts/newer",
       "post:posts/older",
+      "category:projects",
     ]);
     expect(
       catalog.listPosts().map((post) => `${post.category}/${post.slug}`),
