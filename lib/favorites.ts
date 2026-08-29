@@ -9,6 +9,9 @@ export type FavoriteGroup = {
   items: readonly Favorite[];
 };
 
+export const favoritesDescription =
+  "External articles and resources Hunter keeps coming back to.";
+
 // ponytail: a typed const is the ceiling for this curated outbound list.
 // Upgrade to a catalog category or CMS if favorites need MDX bodies,
 // editorial workflow, or more than a short static inventory.

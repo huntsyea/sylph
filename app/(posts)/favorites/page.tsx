@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 
 import { Favorites } from "@/components/favorites";
+import { favoritesDescription } from "@/lib/favorites";
 import { createSiteMetadata } from "@/lib/site/profile";
 
 export const metadata: Metadata = createSiteMetadata({
   title: "Favorites",
-  description: "External articles and resources Hunter keeps coming back to.",
+  description: favoritesDescription,
   path: "/favorites",
 });
 
