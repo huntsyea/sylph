@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-08-23
-- Supersedes: duplicated `guides` and `examples` route implementations
+- Supersedes: duplicated `posts` and `examples` route implementations
 
 ## Context
 

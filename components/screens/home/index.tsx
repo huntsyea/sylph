@@ -10,7 +10,7 @@ import { getDeployUrl } from "@/lib/site/profile";
 const Spacer = () => <div style={{ marginTop: "24px" }} />;
 
 export default function Home() {
-  const guides = contentCatalog.getCategory("guides");
+  const posts = contentCatalog.getCategory("posts");
   const examples = contentCatalog.getCategory("examples");
   return (
     <FadeIn.Container>
@@ -30,12 +30,12 @@ export default function Home() {
           fast. It is also highly customizable, so you can easily make it your
           own. Sylph is perfect for developers, designers, and other creatives
           who want to showcase their work. To start using Sylph, you can follow
-          the guides below.
+          the posts below.
         </p>
       </FadeIn.Item>
-      {guides && (
+      {posts && (
         <FadeIn.Item>
-          <Posts category={guides} />
+          <Posts category={posts} />
         </FadeIn.Item>
       )}
       {examples && (
