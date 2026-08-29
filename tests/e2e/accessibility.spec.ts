@@ -5,6 +5,7 @@ const routes = [
   "/",
   "/guides",
   "/guides/getting-started",
+  "/favorites",
   "/this-category-does-not-exist",
 ];
 

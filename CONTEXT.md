@@ -14,6 +14,10 @@ The complete generated portfolio and publishing experience, including pages, pos
 
 The validated canonical identity of a Site: origin, name, description, locale, social defaults, and deployment presentation. Metadata surfaces consume the Site profile instead of assembling identity values independently.
 
+### Favorite
+
+A curated outbound link to an external article or resource. Favorites are a typed, repository-authored list — not Posts, not a Category, and not part of the Content catalog.
+
 ### Category
 
 A named collection of Posts exposed at one route segment, such as guides or examples. Categories are repository-authored and must resolve to a deterministic static route inventory.

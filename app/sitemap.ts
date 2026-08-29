@@ -8,6 +8,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: getSiteUrl("/").toString(),
     },
+    {
+      url: getSiteUrl("/favorites").toString(),
+    },
     ...contentCatalog.listEntries().map((entry) => {
       if (entry.kind === "category") {
         return {
